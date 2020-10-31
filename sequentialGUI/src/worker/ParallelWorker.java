@@ -11,10 +11,10 @@ public class ParallelWorker {
 	private static String dir;
 	private static List<Image> immagini;
 	private static File[] images;
-	private static int numCore = Utils.getProcessorCoreCount() -1;
+	private static int numCore = Utils.getProcessorCoreCount();
 
 	public void overrideCoreNum(int newNum) {
-		ParallelWorker.numCore = newNum -1 ;
+		ParallelWorker.numCore = newNum;
 
 	}
 
@@ -29,7 +29,7 @@ public class ParallelWorker {
 
 		
 		//Caso base: 1 processore
-		if (numCore == 0) {
+		if (numCore == 1) {
 			loadTask sequentialTask = new loadTask(0, immagini, images, 0, Utils.countFiles(dir));
 			long startTime = System.currentTimeMillis();
 			sequentialTask.fork();
@@ -40,7 +40,7 @@ public class ParallelWorker {
 		}
 		
 		//Caso base: 2 processori
-		if (numCore == 1) {
+		if (numCore == 2) {
 			loadTask sequentialTask1 = new loadTask(0, immagini, images, 0, Utils.countFiles(dir)/2);
 			//System.out.println("Assegno: " + 0 + " " + 0 + " " + Utils.countFiles(dir)/2);
 			loadTask sequentialTask2 = new loadTask(1, immagini, images, Utils.countFiles(dir)/2 , Utils.countFiles(dir));
@@ -57,8 +57,6 @@ public class ParallelWorker {
 		
 
 		// Se ho > 2 processori:		
-		// Questo perchè assegno n-1 chunk agli n-1 processori ed il chunk n-esimo
-		// Che conterrà al più |chunk| elementi al processore n-esimo.
 		int totale = Utils.countFiles(dir);
 		int chunk = totale / numCore; // Gli N-1 chunks
 		int resto = totale % numCore; // il resto
@@ -72,15 +70,20 @@ public class ParallelWorker {
 			// Per gli N-1 core: assegno un chunk.
 			int start = i * chunk;
 			int end = (i + 1) * chunk;
-			C.add(new loadTask(threadID, immagini, images, start, end));
-			//System.out.println("Assegno: " + threadID + " " + start + " " + end);
-			threadID++;
-			// All'ultimo core, assegno l'ultimo chunk (resto)
 			if (i == numCore - 1) {
 				C.add(new loadTask(threadID, immagini, images, start, end + resto));
-				//System.out.println("Assegno: " + threadID + " " + end + " " + (end + resto));
+				System.out.println("Assegno: " + threadID + " " + start + " " + (end + resto));
 				threadID++;
 			}
+			else {
+				// All'ultimo core, assegno l'ultimo chunk (resto)
+				C.add(new loadTask(threadID, immagini, images, start, end));
+				System.out.println("Assegno: " + threadID + " " + start + " " + end);
+				threadID++;
+				
+			}
+
+
 		}
 
 		// Avvio i task ed eseguo
