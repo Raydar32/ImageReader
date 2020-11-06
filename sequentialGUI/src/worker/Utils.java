@@ -5,20 +5,14 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-public class Utils {
-	public final static void clearConsole() {
-		try {
-			final String os = System.getProperty("os.name");
 
-			if (os.contains("Windows")) {
-				Runtime.getRuntime().exec("cls");
-			} else {
-				Runtime.getRuntime().exec("clear");
-			}
-		} catch (final Exception e) {
-			// Handle any exceptions.
-		}
-	}
+//'---------------------------------------------------------------------------------------
+//' Class     : Utils
+//' Author    : Mini Alessandro (7060381)
+//' Purpose   : This  class contains only some methods to interact with the operating system.
+//				it will be less-commented as these methods are quite self-explicative.
+//'--------------------------------------------------------------------------------------- 
+public class Utils {
 
 	public static void infoBox(String infoMessage, String titleBar) {
 		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);

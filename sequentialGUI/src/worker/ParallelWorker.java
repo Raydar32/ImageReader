@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ForkJoinTask;
 
-
+//'---------------------------------------------------------------------------------------
+//' Class     : ParallelWorker
+//' Author    : Mini Alessandro (7060381)
+//' Purpose   : This  class divides the work in tasks and it starts the fork-join paradigm.
+//				this is the core of the program.
+//'--------------------------------------------------------------------------------------- 
 public class ParallelWorker {
 	
 	private static String dir;
@@ -13,11 +18,26 @@ public class ParallelWorker {
 	private static File[] images;
 	private static int numCore = Utils.getProcessorCoreCount();
 
+	// '---------------------------------------------------------------------------------------
+	// ' Method  : overrideCoreNum
+	// ' Author  : Mini Alessandro
+	// ' Purpose : This method is made in case that the user will change the number of the 
+	//			   cores to use, this is used for experimental reasons.
+	// '---------------------------------------------------------------------------------------
 	public void overrideCoreNum(int newNum) {
 		ParallelWorker.numCore = newNum;
 
 	}
 
+	// '---------------------------------------------------------------------------------------
+	// ' Method  : ParallelWorker
+	// ' Author  : Mini Alessandro
+	// ' Purpose : This is the constructor of the class, used only to populate the private 
+	//			   variables, here we have:
+	//						- Dir:		local dir path that contains the images.
+	//						- immagini: shared buffer of images.
+	//						- images:   images seen on a operating-system level (paths).
+	// '---------------------------------------------------------------------------------------
 	public ParallelWorker(String dir, List<Image> immagini, File[] images) {
 		ParallelWorker.dir = dir;
 		ParallelWorker.immagini = immagini;
@@ -25,10 +45,16 @@ public class ParallelWorker {
 
 	}
 
+	// '---------------------------------------------------------------------------------------
+	// ' Method  : start
+	// ' Author  : Mini Alessandro
+	// ' Purpose : This method will divide the work and start the fork-join paradigm, this is the
+	//			   core of the whole program, so it will be heavily commented.
+	// '---------------------------------------------------------------------------------------
 	public void start() {
 
 		
-		//Caso base: 1 processore
+		//Base case: sequential program (only 1 core will be used), the work is divided manually.
 		if (numCore == 1) {
 			loadTask sequentialTask = new loadTask(0, immagini, images, 0, Utils.countFiles(dir));
 			long startTime = System.currentTimeMillis();
@@ -39,46 +65,30 @@ public class ParallelWorker {
 			return;
 		}
 		
-		//Caso base: 2 processori
-		if (numCore == 2) {
-			loadTask sequentialTask1 = new loadTask(0, immagini, images, 0, Utils.countFiles(dir)/2);
-			//System.out.println("Assegno: " + 0 + " " + 0 + " " + Utils.countFiles(dir)/2);
-			loadTask sequentialTask2 = new loadTask(1, immagini, images, Utils.countFiles(dir)/2 , Utils.countFiles(dir));
-			//System.out.println("Assegno: " + 1 + " " + Utils.countFiles(dir)/2 + " " +Utils.countFiles(dir));
-			long startTime = System.currentTimeMillis();
-			sequentialTask1.fork();
-			sequentialTask2.fork();
-			sequentialTask1.join();
-			sequentialTask2.join();
-			long endTime = System.currentTimeMillis();
-			Utils.infoBox("Every image has been loaded in " + (endTime - startTime), "Completed.");
-			return;
-		}
-		
 
-		// Se ho > 2 processori:		
+
+		// if i have more than 2 processor then i divide it automatically.	
 		int totale = Utils.countFiles(dir);
-		int chunk = totale / numCore; // Gli N-1 chunks
-		int resto = totale % numCore; // il resto
+		int chunk = totale / numCore; 															//	<- chunks.
+		int resto = totale % numCore; 															//  <- reminder.
 
-		// Array di fork-join
-		ArrayList<ForkJoinTask<Boolean>> C = new ArrayList<ForkJoinTask<Boolean>>(numCore);
+		// tasks array.
+		ArrayList<ForkJoinTask<Boolean>> C = new ArrayList<ForkJoinTask<Boolean>>(numCore);		
 	
-		// Questa procedura divide gli indici in chunks e li assegna ai vari task
+		// Here we will divide the work.
 		int threadID = 0;
 		for (int i = 0; i < numCore; i++) {
 			// Per gli N-1 core: assegno un chunk.
 			int start = i * chunk;
 			int end = (i + 1) * chunk;
-			if (i == numCore - 1) {
-				C.add(new loadTask(threadID, immagini, images, start, end + resto));
-				System.out.println("Assegno: " + threadID + " " + start + " " + (end + resto));
+			if (i == numCore - 1) {																//	<- every core from 1 to n-1.
+				C.add(new loadTask(threadID, immagini, images, start, end + resto));			
 				threadID++;
 			}
-			else {
-				// All'ultimo core, assegno l'ultimo chunk (resto)
-				C.add(new loadTask(threadID, immagini, images, start, end));
-				System.out.println("Assegno: " + threadID + " " + start + " " + end);
+			else {				
+				C.add(new loadTask(threadID, immagini, images, start, end));				    //	<- last core takes the
+																								// 	   reminder.
+				
 				threadID++;
 				
 			}
@@ -86,19 +96,20 @@ public class ParallelWorker {
 
 		}
 
-		// Avvio i task ed eseguo
+		//Here we will start the tasks (fork)
 		long startTime = System.currentTimeMillis();
 		for (ForkJoinTask<Boolean> task : C) {
 			task.fork();
 		}
 
+		//Here we will wait and end the tasks (join)
 		for (ForkJoinTask<Boolean> task : C) {
 			task.join();
 		}
 
-		long endTime = System.currentTimeMillis();
+		long endTime = System.currentTimeMillis();												  //	<- timing.
 
-		// toast con risultato.
-		Utils.infoBox("Every image has been loaded in " + (endTime - startTime), "Completed.");
+		
+		Utils.infoBox("Every image has been loaded in " + (endTime - startTime), "Completed.");	  //	<- result.
 	}
 }
