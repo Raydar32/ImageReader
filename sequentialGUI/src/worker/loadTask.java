@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.RecursiveTask;
 
-
 //'---------------------------------------------------------------------------------------
 //' Class     : loadTask
 //' Author    : Mini Alessandro (7060381)
@@ -13,8 +12,11 @@ import java.util.concurrent.RecursiveTask;
 //				images according to a range.
 //				every range (or subset) is disjoint from the others.
 //'--------------------------------------------------------------------------------------- 
-public class loadTask extends RecursiveTask<Boolean> {
-	
+
+
+
+
+public class loadTask extends RecursiveTask<Boolean> {	
 	private static final long serialVersionUID = 1L;
 	private int threadID;
 	private List<Image> immagini;
@@ -25,7 +27,6 @@ public class loadTask extends RecursiveTask<Boolean> {
 
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : loadTask
-	// ' Author  : Mini Alessandro
 	// ' Purpose : Constructor of the Loadtask class, it will set the private variables in order
 	//			   to be used later on.
 	// '---------------------------------------------------------------------------------------
@@ -37,10 +38,10 @@ public class loadTask extends RecursiveTask<Boolean> {
 		this.baseFolder = baseFolder;
 
 	}
+	
 
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : compute
-	// ' Author  : Mini Alessandro
 	// ' Purpose : Method inherited from RecursiveTask<Boolean>, this method will do the work.
 	//			   we use a for loop with a base index and an end index, it will load images in
 	//			   the shared buffer held by "immagini" variable.

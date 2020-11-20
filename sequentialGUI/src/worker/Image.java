@@ -6,9 +6,6 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-
-
 //'---------------------------------------------------------------------------------------
 //' Class     : Image
 //' Author    : Mini Alessandro (7060381)
@@ -18,23 +15,24 @@ import javax.swing.JLabel;
 //				has to be loaded or something has gone wrong.
 //				an image implements the Drawable interface.
 //'--------------------------------------------------------------------------------------- 
-public class Image implements Drawable {
 
+
+
+public class Image implements Drawable {
 	private String percorso;
 	private ImageIcon icon;
 	
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : Image
-	// ' Author  : Mini Alessandro
 	// ' Purpose : Constructor of the image class, if no arguments it creates an empty image.
 	// '---------------------------------------------------------------------------------------	
 	public Image() {		
 		this.percorso = "mock";
 	}
 	
+	
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : Image
-	// ' Author  : Mini Alessandro
 	// ' Purpose : Override of costructor, if a valid path is specified, it creates(and loads
 	//			   immediatly in memory) the image.
 	// '---------------------------------------------------------------------------------------
@@ -46,7 +44,6 @@ public class Image implements Drawable {
 	
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : draw
-	// ' Author  : Mini Alessandro
 	// ' Purpose : Method implemented from the Drawable interfaces, it describes how the image
 	//			   will be displayed.
 	// '---------------------------------------------------------------------------------------
@@ -64,12 +61,12 @@ public class Image implements Drawable {
 
 	}
 	
-
 	
 	public String getPercorso() {
 		return percorso;
 	}
 
+	
 	@Override
 	public String toString() {
 		return this.percorso;
