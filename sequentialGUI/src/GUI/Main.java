@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -195,7 +196,7 @@ public class Main {
 			}
 		});
 
-		List<Image> immagini = (new ArrayList<Image>()); // oggetti immagine
+		List<Image> immagini = Collections.synchronizedList(new ArrayList<Image>());
 		// Button load images click.
 		btnLoadImages.addActionListener(new ActionListener() {
 			// '---------------------------------------------------------------------------------------
