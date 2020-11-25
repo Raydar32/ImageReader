@@ -14,4 +14,5 @@ The main idea is to divide the work of importing images in tasks executed by thr
 An image is a Java object that loads a real .jpg image inside the program memory.
 An accurate description of implementation is contained in report.pdf.
 
-
+### Screenshot
+![alt text](https://ibb.co/yBqHwWg)
