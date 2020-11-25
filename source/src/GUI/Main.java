@@ -137,10 +137,15 @@ public class Main {
 
 		JLabel lblNewLabel_1 = new JLabel("Image Reader");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(227, 0, 245, 28);
+		lblNewLabel_1.setBounds(204, 0, 191, 28);
 		frame.getContentPane().add(lblNewLabel_1);
 
 		JButton btnHelp = new JButton("?");
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Utils.infoBox("Coded by Alessandro Mini (mat. 7060831) - University of Florence.  Updated report and tutorial at: https://github.com/minAless32/ImageReader", "Informations");
+			}
+		});
 		btnHelp.setBounds(418, 7, 54, 20);
 		frame.getContentPane().add(btnHelp);
 
