@@ -15,4 +15,4 @@ An image is a Java object that loads a real .jpg image inside the program memory
 An accurate description of implementation is contained in report.pdf.
 
 ### Screenshot
-![alt text](https://ibb.co/yBqHwWg)
+![alt text](https://i.ibb.co/mF4fL6h/immagine.png)
