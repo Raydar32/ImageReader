@@ -8,8 +8,7 @@ import java.util.concurrent.ForkJoinTask;
 //'---------------------------------------------------------------------------------------
 //' Class     : ParallelWorker
 //' Author    : Mini Alessandro (7060381)
-//' Purpose   : This  class divides the work in tasks and it starts the fork-join paradigm.
-//				this is the core of the program.
+//' Purpose   : This  class divides the work in tasks and starts the fork-join paradigm.
 //'--------------------------------------------------------------------------------------- 
 
 
@@ -24,8 +23,7 @@ public class ParallelWorker {
 
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : overrideCoreNum
-	// ' Purpose : This method is made in case that the user will change the number of the 
-	//			   cores to use, this is used for experimental reasons.
+	// ' Purpose : This method is used to change the number of used cores.
 	// '---------------------------------------------------------------------------------------
 	public void overrideCoreNum(int newNum) {
 		ParallelWorker.numCore = newNum;

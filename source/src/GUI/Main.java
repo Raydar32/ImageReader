@@ -69,7 +69,7 @@ public class Main {
 
 	// '---------------------------------------------------------------------------------------
 	// ' Method  : createEmptyImageArrayList
-	// ' Purpose : this method will create an "empry images" arraylist, an arraylist
+	// ' Purpose : this method will create an "empty images" arraylist, an arraylist
 	// 			   in which  we have empty (or "mock" images). this is useful to distinguish 
 	//			   between images that has been loaded or not has been loaded.
 	// '---------------------------------------------------------------------------------------
