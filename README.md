@@ -16,3 +16,6 @@ An accurate description of implementation is contained in report.pdf.
 
 ### Screenshot
 ![alt text](https://i.ibb.co/mF4fL6h/immagine.png)
+
+### License
+Licensed under the term of MIT License.
