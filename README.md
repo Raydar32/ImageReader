@@ -1,5 +1,6 @@
 # ImageReader
-Lab assignment for Parallel Computing course @ University of Florence.
+Lab assignment for Parallel Computing course (at) University of Florence.
+
 ### Features
 
 - Parallel and sequential non-blocking image reader.
